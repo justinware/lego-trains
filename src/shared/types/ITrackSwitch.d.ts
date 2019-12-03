@@ -1,9 +1,12 @@
-type TTrackSwitchDirection = 'Left' | 'Right';
+export enum TrackSwitchDirection {
+  Left,
+  Right
+}
 
 interface ITrackSwitch {
 
   id: number;
-  direction: TTrackSwitchDirection;
+  direction: TrackSwitchDirection;
   isOpen: boolean;
   open(): void;
   close(): void;
