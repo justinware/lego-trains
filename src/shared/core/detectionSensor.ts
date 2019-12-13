@@ -12,8 +12,13 @@ class DetectionSensor implements IDetectionSensor {
   constructor(id: number, pin: string) {
 
     this._id = id;
-    this._sensor = new Sensor(pin);
+    this._sensor = new Sensor({ pin, freq: 100, threshold: 50 } as any);
     // this._sensorStream = fromEvent(this._sensor, 'data');
+
+    this._sensor.on('change', () => {
+      
+      console.log(this._sensor.analog);
+    });
   }
   
   get id(): number {
