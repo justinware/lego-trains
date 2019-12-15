@@ -1,8 +1,9 @@
+import IComponent from './IComponent';
+
 import { Observable } from 'rxjs';
 
-interface IDetectionSensor {
+interface IDetectionSensor extends IComponent {
 
-  id: number;
   enterStream: Observable<void>;
   exitStream: Observable<void>;
 }

@@ -6,7 +6,7 @@ import * as chalk from 'chalk';
 const tsProject = ts.createProject('tsconfig.json');
 const outputDir = 'dist';
 const logMessagePrefix = '         +  ';
-const logMessage = (action: string, context: string) => {
+const logMessage = (action: string, context: string): void => {
 
   console.log(`${logMessagePrefix}${action}${chalk.magenta(context)}`);
 };

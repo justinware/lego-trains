@@ -1,4 +1,6 @@
-interface ITrain {
+import IComponent from './IComponent';
+
+interface ITrain extends IComponent {
 
   forward(speed: number): void;
   reverse(speed: number): void;

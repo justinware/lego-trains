@@ -1,17 +1,19 @@
 import { Observable, fromEvent } from 'rxjs';
 import { Sensor } from 'johnny-five';
 
+import { ComponentType } from '../types/enums';
+import ComponentBase from './componentBase';
 import IDetectionSensor from '../types/IDetectionSensor';
 
-class DetectionSensor implements IDetectionSensor {
+class DetectionSensor extends ComponentBase implements IDetectionSensor {
   
-  private _id: number;
   private _sensor: Sensor;
   private _sensorStream: Observable<number>;
   
   constructor(id: number, pin: string) {
 
-    this._id = id;
+    super(id, ComponentType.Sensor);
+    
     this._sensor = new Sensor({ pin, freq: 100, threshold: 50 } as any);
     // this._sensorStream = fromEvent(this._sensor, 'data');
 
@@ -21,11 +23,6 @@ class DetectionSensor implements IDetectionSensor {
     });
   }
   
-  get id(): number {
-
-    return this._id;
-  }
-
   get enterStream(): Observable<void> {
 
     return undefined;

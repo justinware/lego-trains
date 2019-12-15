@@ -1,11 +1,12 @@
+import IComponent from './IComponent';
+
 export enum TrackSwitchDirection {
   Left,
   Right
 }
 
-export interface ITrackSwitch {
+export interface ITrackSwitch extends IComponent {
 
-  id: number;
   isTurned: boolean;
   initialise(): Promise<void>;
   turn(): Promise<void>;

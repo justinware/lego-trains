@@ -1,9 +1,6 @@
 import Board from '../shared/core/board'; 
-// import IDetectionSensor from '../shared/types/IDetectionSensor';
-// import DetectionSensor from '../shared/core/detectionSensor';
-
+import DetectionSensor from '../shared/core/detectionSensor';
 import TrackSwitch from '../shared/core/trackSwitch';
-
 import wait from '../shared/utils/wait';
 
 const main = async (): Promise<void> => {
@@ -11,7 +8,7 @@ const main = async (): Promise<void> => {
   const board = new Board();
   await board.initialise();
   
-  // s1 = new DetectionSensor(1, 'A0');
+  // const s1 = new DetectionSensor(1, 'A0');
 
   const ts1 = new TrackSwitch(1, 'A0');
   await ts1.initialise();

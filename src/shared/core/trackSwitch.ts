@@ -1,6 +1,8 @@
 import { Servo } from 'johnny-five';
 
 import { TrackSwitchDirection , ITrackSwitch } from '../types/ITrackSwitch';
+import { ComponentType } from '../types/enums';
+import ComponentBase from './componentBase';
 import wait from '../utils/wait';
 
 const minAngle: number = 25;
@@ -9,9 +11,8 @@ const adjustAngle: number = 3;
 const moveInterval: number = 400;
 const adjustInterval: number = 50;
 
-class TrackSwitch implements ITrackSwitch {
+class TrackSwitch extends ComponentBase implements ITrackSwitch {
   
-  private _id: number;
   private _isTurned: boolean = false;
   private _straightAngle: number = minAngle;
   private _turnAngle: number = maxAngle;
@@ -19,10 +20,10 @@ class TrackSwitch implements ITrackSwitch {
 
   constructor(id: number, pin: string, direction: TrackSwitchDirection = TrackSwitchDirection.Left) {
 
+    super(id, ComponentType.TrackSwitch);
+    
     let startAngle = minAngle;
     
-    this._id = id;
-
     // TODO: Allow right-hand switches
     // if (direction == TrackSwitchDirection.Right) {
 
@@ -40,19 +41,10 @@ class TrackSwitch implements ITrackSwitch {
     console.log(`${this.messagePrefix}servo initialised on pin ${this._servo.pin} at ${this._servo.position}°`);
   }
   
-  private get messagePrefix(): string {
-
-    return `Track Switch ${this._id}: `;
-  }
 
   private get status(): string {
 
     return this._isTurned ? 'turned' : 'straight';
-  }
-
-  get id(): number {
-
-    return this._id;
   }
 
   get isTurned(): boolean {
