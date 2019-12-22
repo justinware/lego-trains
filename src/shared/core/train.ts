@@ -1,28 +1,30 @@
-import { ComponentType } from '../types/enums';
-import ComponentBase from './componentBase';
+import { Motor } from 'johnny-five';
+
+import { ComponentType, TrainDirection } from '../types/enums';
+import Component from './component';
 import ITrain from '../types/ITrain';
 
-class Train extends ComponentBase implements ITrain {
+class Train extends Component implements ITrain {
 
-  constructor(id: number) {
+  private _motor: Motor = undefined;
 
-    super(id, ComponentType.Train);
+  constructor(id: number, pwmPin: number, dirPin: number, isDummy: boolean = false) {
 
-    // Hook up JF motor
+    super(id, ComponentType.Train, isDummy);
+
+    //this._motor = new Motor([pwmPin, dirPin]);
   }
 
-  forward(speed: number): void {
+  move(direction: TrainDirection, speed?: number): void {
    
-
-  }
-  
-  reverse(speed: number): void {
+    const directionText:string = direction === TrainDirection.Forward ? 'forward' : 'backwards';
     
-
+    console.log(`${this._messagePrefix}moving ${directionText}`);
   }
   
   stop(): void {
   
+    console.log(`${this._messagePrefix}stopped`);
   }
 }
 

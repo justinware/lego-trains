@@ -1,9 +1,17 @@
 Sensor 1
 --------
-
+Signal - Red
+5V     - Grey
+Ground - Black
 
 Sensor 2
 --------
+Signal - Red
+5V     - Grey
+Ground - Black
+
+Track Switch 1
+--------------
 Signal - White
 5V     - Grey
 Ground - Purple

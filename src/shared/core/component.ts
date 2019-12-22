@@ -1,20 +1,28 @@
 import IComponent from '../types/IComponent';
 import { ComponentType } from '../types/enums';
 
-abstract class ComponentBase implements IComponent {
+abstract class Component implements IComponent {
 
   private _id: number;
   private _type: ComponentType;
-  private _messagePrefix: string;
+  protected _isDummy: boolean;
+  protected _messagePrefix: string;
   
-  constructor(id: number, type: ComponentType) {
+  constructor(id: number, type: ComponentType, isDummy: boolean = false) {
 
     this._id = id;
     this._type = type;
+    this._isDummy = isDummy;
 
     const getMessagePrefix = (description: string): string => `${description} ${id}: `;
 
     switch (type) {
+
+      case ComponentType.Action: {
+
+        this._messagePrefix = getMessagePrefix('Action');
+        break;
+      }
 
       case ComponentType.Sensor: {
 
@@ -45,11 +53,6 @@ abstract class ComponentBase implements IComponent {
 
     return this._type;
   }
-
-  protected get messagePrefix(): string {
-
-    return this._messagePrefix;
-  }
 }
 
-export default ComponentBase;
+export default Component;
