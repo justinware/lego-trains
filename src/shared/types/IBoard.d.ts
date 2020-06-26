@@ -1,4 +1,6 @@
-interface IBoard {
+import IComponent from './IComponent';
+
+interface IBoard extends IComponent {
 
   initialise(): Promise<void>
 }

@@ -18,9 +18,9 @@ abstract class Component implements IComponent {
 
     switch (type) {
 
-      case ComponentType.Action: {
+      case ComponentType.Board: {
 
-        this._messagePrefix = getMessagePrefix('Action');
+        this._messagePrefix = getMessagePrefix('Board');
         break;
       }
 

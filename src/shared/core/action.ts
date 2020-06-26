@@ -1,24 +1,24 @@
-import IAction from '../types/IAction';
-import { ComponentType } from '../types/enums';
-import Component from './component';
+// import IAction from '../types/IAction';
+// import { ComponentType } from '../types/enums';
+// import Component from './component';
 
-abstract class Action extends Component implements IAction {
+// abstract class Action extends Component implements IAction {
 
-  private _order: number;
+//   private _order: number;
   
-  constructor(id: number, order: number) {
+//   constructor(id: number, order: number) {
 
-    super(id, ComponentType.Action);
+//     super(id, ComponentType.Action);
 
-    this._order = order;
-  }
+//     this._order = order;
+//   }
 
-  get order(): number {
+//   get order(): number {
 
-    return this._order;
-  }
+//     return this._order;
+//   }
 
-  abstract execute(): Promise<void>;
-}
+//   abstract execute(): Promise<void>;
+// }
 
-export default Action;
+// export default Action;

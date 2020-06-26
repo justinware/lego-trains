@@ -1,8 +1,13 @@
-import xmas from '../shared/layouts/xmas';
+import motorTest from './motorTest';
+//import XmasLayout from '../shared/layouts/xmas';
+
+const maxLoops: number = 3;
+const isDummy: boolean = false;
 
 const main = async () => {
 
-  await xmas();
+  //const layout = new XmasLayout(maxLoops, isDummy);
+  await motorTest(isDummy);
 
   console.log('App: complete');
 }

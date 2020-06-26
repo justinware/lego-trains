@@ -3,146 +3,125 @@ import IDetectionSensor from '../types/IDetectionSensor';
 import IFakeSensor from '../types/IFakeSensor';
 import ITrackSwitch from '../types/ITrackSwitch';
 import ITrain from '../types/ITrain';
+import ILayout from '../types/ILayout';
 
-import Board from '../core/board'; 
+import Board from '../core/board';
 import DetectionSensor from '../core/detectionSensor';
 import TrackSwitch from '../core/trackSwitch';
 import Train from '../core/train';
 import wait from '../utils/wait';
-import { TrainDirection } from '../types/enums';
+import { TrainDirection, TrainSpeed } from '../types/enums';
 
-let b1: IBoard;
-let t1: ITrain;
-let ts1: ITrackSwitch;
-let s1: IFakeSensor;
-let s2: IFakeSensor
-// let s3: IDetectionSensor;
+const messagePrefix = 'Xmas layout: ';
+const delay:number = 2000;
 
-const initialise = async () => {
+class XmasLayout implements ILayout {
 
-  if (t1 === undefined) {
+  private _maxLoops: number;
+  private _isDummy: boolean;
+  private _loopCount: number = 0;
+  private _b1: IBoard;
+  private _t1: ITrain;
+  private _ts1: ITrackSwitch;
+  private _s1: IFakeSensor;
+  private _s2: IFakeSensor;
 
-    b1 = new Board();
-    await b1.initialise();
+  constructor(maxLoops: number, isDummy: boolean = false) {
 
-    t1 = new Train(1, 99, 99, true);
-    ts1 = new TrackSwitch(1, 'A0');
-    await ts1.initialise();
-  
-    s1 = new DetectionSensor(1, 'A1');
-    s2 = new DetectionSensor(2, 'A2');
-    // s3 = new DetectionSensor(3, 'A3', true);
+    this._maxLoops = maxLoops;
+    this._isDummy = isDummy;
   }
-};
 
-export default async (): Promise<void> => {
+  private async _initialise() {
 
-  const messagePrefix = 'Xmas layout: ';
-  const delay:number = 20000;
-  const maxLoops = 3;
-  let loopCount = 0;
+    if (this._b1 === undefined) {
   
-  const handleSensor1Exit = async () => {
-
-    if (loopCount > 0) {
-
-      t1.stop();
-      console.log(`${messagePrefix}run complete`);
-    }
-  };
-
-  const handleSensor2Exit = async () => { 
-
-    if (loopCount === 1) {
-
-      ts1.turn();
-    }
-  };
+      this._b1 = new Board(1, this._isDummy);
+      await this._b1.initialise();
   
-  return new Promise<void>(async (resolve) => {
-
-    console.log(`${messagePrefix}executing`);
+      this._t1 = new Train(1, 6, 5, this._isDummy);
+      this._ts1 = new TrackSwitch(1, 'A0', this._isDummy);
+      await this._ts1.initialise();
     
-    await initialise();
+      this._s1 = new DetectionSensor(1, 'A1', this._isDummy);
+      this._s2 = new DetectionSensor(2, 'A2', this._isDummy);
+    }
+  };
 
-    s1.enterStream.subscribe(() => {});
-    s1.exitStream.subscribe(handleSensor1Exit);
-    s2.enterStream.subscribe(() => {});
-    s2.exitStream.subscribe(handleSensor2Exit);
+  private async _handleSensor1Exit(resolve: (value?: void | PromiseLike<void>) => void) {
 
-    t1.move(TrainDirection.Forward);
-    await wait(delay);
-    // s1.forcePumpEnter();
-    // await wait(delay);
-    // s1.forcePumpExit();
-
-    for (let i:number = 0; i < maxLoops; i++) {
+    if (this._loopCount > 0) {
       
-      loopCount = i + 1;
-      console.log(`${messagePrefix}loop ${loopCount}`);
-
-      await wait(delay);
-      // s2.forcePumpEnter();
-      // await wait(delay);
-      // s2.forcePumpExit();
+      this._t1.stop();
+      console.log(`${messagePrefix}run complete`);
+      
+      resolve();
     }
-
-    t1.stop();
-    await ts1.straight();
-    t1.move(TrainDirection.Backward);
-    await wait(delay);
-    // s1.forcePumpEnter();
-    // await wait(delay);
-    // s1.forcePumpExit();
-
-    resolve();
-  });
-
-  // let loopCount:number = -1;
-
-  // const handleSensor2Exit = async () => {
-
-  //   if (loopCount === -1) {
-
-  //     await ts1.turn();
-  //   }
-
-  //   loopCount++;
-    
-    // if (loopCount === 10) {
-
-    //   t1.stop();
-    //   await ts1.straight();
-    //   t1.move(TrainDirection.Backward);
-    // } else {
-
-    //   await ts1.turn();
-    // }
   };
 
-  // await initialise();
+  private async _handleSensor2Enter() { 
 
-  // t1.move(TrainDirection.Forward);
+    this._loopCount++;
+    console.log(`${messagePrefix}loop ${this._loopCount}`);
 
-  // await wait(5000);
-  // s1.forcePumpExit();
+    if (this._loopCount === 1) {
 
-  // await wait(5000);
-  // s2.forcePumpExit();
-  // Move train (t1) forward
-  // When S2 exit
-  //   turn track (ts1)
-  // Loop (run) for 5 mins
-  // When S2 exit
-  //   stop train 
-  //   straighten track
-  //   reverse train (slowly)
-  //   When S1 exit (in reverse)
-  //     stop train
-  //     end
+      this._ts1.turn();
+    }
+  };
+
+  // private async _handleSensor2Exit() { 
+
+  //   if (this._loopCount === 1) {
+
+  //     this._ts1.turn();
+  //   }
+  // };
   
-  // t1.move(TrainDirection.Forward);
+  execute(): Promise<void> {
 
+    return new Promise<void>(async (resolve) => {
 
-  // await wait(5000);
-  // fs1.pumpEnter();
+      console.log(`${messagePrefix}executing`);
+
+      await this._initialise();
+  
+      this._s1.enterStream.subscribe(() => {});
+      this._s1.exitStream.subscribe(() => { this._handleSensor1Exit(resolve); });
+      this._s2.enterStream.subscribe(() => { this._handleSensor2Enter(); });
+      this._s2.exitStream.subscribe(() => {});
+  
+      this._t1.move(TrainDirection.Forward, TrainSpeed.Medium);
+
+      if (this._isDummy) {
+  
+        await wait(delay);
+        this._s1.forcePumpEnter();
+        await wait(delay);
+        this._s1.forcePumpExit();
+
+        // for (let i:number = 0; i < this._maxLoops; i++) {
+
+        //   await wait(delay);
+        //   this._s2.forcePumpEnter();
+        //   await wait(delay);
+        //   this._s2.forcePumpExit();
+        // }
+      }
+  
+      // this._t1.stop();
+      // await this._ts1.straight();
+      // this._t1.move(TrainDirection.Backward, TrainSpeed.Low);
+      
+      // if (this._isDummy) {
+  
+      //   await wait(delay);
+      //   this._s1.forcePumpEnter();
+      //   await wait(delay);
+      //   this._s1.forcePumpExit();
+      // }
+    });
+  }
+}
+
+export default XmasLayout;

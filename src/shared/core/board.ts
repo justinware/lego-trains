@@ -1,21 +1,36 @@
 import { Board as JFBoard } from 'johnny-five';
 
+import { ComponentType } from '../types/enums';
+import Component from './component';
 import IBoard from '../types/IBoard';
 
-class Board implements IBoard {
+class Board extends Component implements IBoard {
   
   private _board: JFBoard = undefined;
+
+  constructor(id: number, isDummy: boolean = false) {
+
+    super(id, ComponentType.Board, isDummy);
+  }
 
   initialise(): Promise<void> {
     
     return new Promise<void>(resolve => {
 
-      this._board = new JFBoard({ repl: false });
-      this._board.on('ready', () => {
+      const doResolve = ():void => {
 
-        console.log('Board: ready');
+        console.log(`${this._messagePrefix}ready`);
         resolve();
-      });
+      };
+      
+      if (this._isDummy) {
+
+        doResolve();
+      } else {
+
+        this._board = new JFBoard({ repl: false });
+        this._board.on('ready', doResolve);  
+      }
     });
   }
 }

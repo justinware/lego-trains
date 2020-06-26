@@ -1,9 +1,9 @@
 import IComponent from './IComponent';
-import { TrainDirection } from '../types/enums';
+import { TrainDirection, TrainSpeed } from '../types/enums';
 
 interface ITrain extends IComponent {
 
-  move(direction: TrainDirection, speed?: number): void;
+  move(direction: TrainDirection, speed: TrainSpeed): void;
   stop(): void;
 }
 
