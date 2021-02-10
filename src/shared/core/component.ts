@@ -1,47 +1,26 @@
 import IComponent from '../types/IComponent';
 import { ComponentType } from '../types/enums';
 
+const messagePrefixMap = new Map<ComponentType, string>();
+messagePrefixMap.set(ComponentType.Board, 'Board');
+messagePrefixMap.set(ComponentType.Layout, 'Layout');
+messagePrefixMap.set(ComponentType.Sensor, 'Sensor');
+messagePrefixMap.set(ComponentType.TrackSwitch, 'Track Switch');
+messagePrefixMap.set(ComponentType.Train, 'Train');
+
 abstract class Component implements IComponent {
 
   private _id: number;
   private _type: ComponentType;
   protected _isDummy: boolean;
   protected _messagePrefix: string;
-  
+
   constructor(id: number, type: ComponentType, isDummy: boolean = false) {
 
     this._id = id;
     this._type = type;
     this._isDummy = isDummy;
-
-    const getMessagePrefix = (description: string): string => `${description} ${id}: `;
-
-    switch (type) {
-
-      case ComponentType.Board: {
-
-        this._messagePrefix = getMessagePrefix('Board');
-        break;
-      }
-
-      case ComponentType.Sensor: {
-
-        this._messagePrefix = getMessagePrefix('Sensor');
-        break;
-      }
-
-      case ComponentType.TrackSwitch: {
-
-        this._messagePrefix = getMessagePrefix('Track Switch');
-        break;
-      }
-
-      case ComponentType.Train: {
-
-        this._messagePrefix = getMessagePrefix('Train');
-        break;
-      }
-    }
+    this._messagePrefix = `${messagePrefixMap.get(type)} ${id}: `;
   }
 
   get id(): number {
@@ -52,6 +31,11 @@ abstract class Component implements IComponent {
   get type(): ComponentType {
 
     return this._type;
+  }
+
+  protected log(message: string) {
+
+    console.log(`${this._messagePrefix}${message}`);
   }
 }
 

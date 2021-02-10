@@ -1,14 +1,15 @@
 export enum ComponentType {
-  
+
   // Action,
   Board,
+  Layout,
   Sensor,
   TrackSwitch,
   Train
 }
 
 export enum TrackSwitchDirection {
-  
+
   Left,
   Right
 }

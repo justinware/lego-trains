@@ -5,7 +5,7 @@ import Component from './component';
 import IBoard from '../types/IBoard';
 
 class Board extends Component implements IBoard {
-  
+
   private _board: JFBoard = undefined;
 
   constructor(id: number, isDummy: boolean = false) {
@@ -14,7 +14,7 @@ class Board extends Component implements IBoard {
   }
 
   initialise(): Promise<void> {
-    
+
     return new Promise<void>(resolve => {
 
       const doResolve = ():void => {
@@ -22,14 +22,14 @@ class Board extends Component implements IBoard {
         console.log(`${this._messagePrefix}ready`);
         resolve();
       };
-      
+
       if (this._isDummy) {
 
         doResolve();
       } else {
 
         this._board = new JFBoard({ repl: false });
-        this._board.on('ready', doResolve);  
+        this._board.on('ready', doResolve);
       }
     });
   }
