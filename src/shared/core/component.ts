@@ -1,5 +1,4 @@
-import IComponent from '../types/IComponent';
-import { ComponentType } from '../types/enums';
+import { IComponent, ComponentType } from '../types';
 
 const messagePrefixMap = new Map<ComponentType, string>();
 messagePrefixMap.set(ComponentType.Board, 'Board');
@@ -35,6 +34,8 @@ abstract class Component implements IComponent {
 
   protected log(message: string) {
 
+    // TODO: Highlight (with colour) the prefix
+    // TODO: Pad the prefix out so that all components align
     console.log(`${this._messagePrefix}${message}`);
   }
 }

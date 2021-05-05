@@ -1,8 +1,7 @@
 import { Motor } from 'johnny-five';
 
-import { ComponentType, TrainDirection, TrainSpeed } from '../types/enums';
+import { ITrain, ComponentType, TrainDirection, TrainSpeed } from '../types';
 import Component from './component';
-import ITrain from '../types/ITrain';
 
 class Train extends Component implements ITrain {
 

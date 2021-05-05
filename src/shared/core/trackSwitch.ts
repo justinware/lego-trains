@@ -1,7 +1,6 @@
 import { Servo } from 'johnny-five';
 
-import ITrackSwitch from '../types/ITrackSwitch';
-import { ComponentType } from '../types/enums';
+import { ITrackSwitch, ComponentType } from '../types';
 import Component from './component';
 import wait from '../utils/wait';
 
@@ -12,7 +11,7 @@ const moveInterval: number = 400;
 const adjustInterval: number = 50;
 
 class TrackSwitch extends Component implements ITrackSwitch {
-  
+
   private _isTurned: boolean = false;
   private _straightAngle: number = minAngle;
   private _turnAngle: number = maxAngle;
@@ -21,7 +20,7 @@ class TrackSwitch extends Component implements ITrackSwitch {
   constructor(id: number, pin: string, isDummy: boolean = false) {
 
     super(id, ComponentType.TrackSwitch, isDummy);
-    
+
     if (!this._isDummy) {
 
       let startAngle = minAngle;
@@ -30,11 +29,11 @@ class TrackSwitch extends Component implements ITrackSwitch {
         range: [minAngle, maxAngle],
         startAt: startAngle
       });
-  
+
       console.log(`${this._messagePrefix}servo initialised on pin ${this._servo.pin} at ${this._servo.position}°`);
     }
   }
-  
+
   private get status(): string {
 
     return this._isTurned ? 'turned' : 'straight';
@@ -53,7 +52,7 @@ class TrackSwitch extends Component implements ITrackSwitch {
   }
 
   async turn(): Promise<void> {
-  
+
     if (!this._isDummy) {
 
       this._servo.to(this._turnAngle, moveInterval);
@@ -69,9 +68,9 @@ class TrackSwitch extends Component implements ITrackSwitch {
     this._isTurned = true;
     console.log(`${this._messagePrefix}${this.status}`);
   }
-  
+
   async straight(logMessage: boolean = true): Promise<void> {
-    
+
     if (!this._isDummy) {
 
       this._servo.to(this._straightAngle, moveInterval);
@@ -86,7 +85,7 @@ class TrackSwitch extends Component implements ITrackSwitch {
 
     this._isTurned = false;
     if (logMessage) {
-        
+
       console.log(`${this._messagePrefix}${this.status}`);
     }
   }

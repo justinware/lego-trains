@@ -1,8 +1,7 @@
 import { Board as JFBoard } from 'johnny-five';
 
-import { ComponentType } from '../types/enums';
+import { ComponentType, IBoard } from '../types';
 import Component from './component';
-import IBoard from '../types/IBoard';
 
 class Board extends Component implements IBoard {
 

@@ -1,31 +1,26 @@
-import { Subscription } from 'rxjs';
-
 import Layout from '../core/layout';
 import Board from '../core/board';
 import Train from '../core/train';
-import DetectionSensor from '../core/detectionSensor';
-import IBoard from '../types/IBoard';
-import ITrain from '../types/ITrain';
-import IDetectionSensor from '../types/IDetectionSensor';
-import { TrainDirection, TrainSpeed } from '../types/enums';
+import MotionSensor from '../core/motionSensor';
+import { IBoard, ITrain, IMotionSensor } from '../types';
+import { TrainDirection, TrainSpeed, SensorEvent } from '../types/enums';
 import wait from '../utils/wait';
 import { WAIT_TIMES } from '../core/constants';
+import runTrainUntilSensor from '../actions/runTrainUntilSensor';
 
 class TestLayout extends Layout {
 
   private _board: IBoard;
   private _train: ITrain;
-  private _sensor1: IDetectionSensor;
-  private _sensor2: IDetectionSensor;
-  private _sensor2ExitSubscription: Subscription;
+  private _sensor1: IMotionSensor;
+  private _sensor2: IMotionSensor;
 
   protected async initialise(): Promise<void> {
 
     this._board = new Board(1, this._isDummy);
     this._train = new Train(1, 5, 6, this._isDummy);
-    this._sensor1 = new DetectionSensor(1, 'A1', this._isDummy);
-    this._sensor2 = new DetectionSensor(2, 'A2', this._isDummy);
-    this._sensor2ExitSubscription = this._sensor2.exitStream.subscribe(() => { });
+    this._sensor1 = new MotionSensor(1, 'A1', this._isDummy);
+    this._sensor2 = new MotionSensor(2, 'A2', this._isDummy);
 
     await this._board.initialise();
 
@@ -36,18 +31,12 @@ class TestLayout extends Layout {
 
   protected async executeStart(): Promise<void> {
 
-    // const trainOnLoop = this._sensor2.exitStream.toPromise();
-
-    // Move Train forward slowly until Sensor 2 pumps Exit, then resolve
-    this._train.move(TrainDirection.Forward, TrainSpeed.Low);
-
     if (this._isDummy) {
 
-      await wait(WAIT_TIMES.MEDIUM);
-      this._sensor2.forcePumpExit();
+      setTimeout(() => { this._sensor2.forcePumpExit(); }, WAIT_TIMES.LARGE);
     }
 
-    // await this._sensor2.exitStream.toPromise();
+    await runTrainUntilSensor(this._train, TrainDirection.Forward, TrainSpeed.Low, this._sensor2, SensorEvent.Exit);
   }
 
   protected async executeLoop(): Promise<void> {

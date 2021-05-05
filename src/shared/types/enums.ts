@@ -1,6 +1,5 @@
 export enum ComponentType {
 
-  // Action,
   Board,
   Layout,
   Sensor,
@@ -24,4 +23,10 @@ export enum TrainSpeed {
 
   Low = 50,
   Medium = 100
+}
+
+export enum SensorEvent {
+
+  Enter,
+  Exit
 }

@@ -1,6 +1,6 @@
-import IComponent from './IComponent';
+import IComponent from './component';
 
-interface ITrackSwitch extends IComponent {
+export interface ITrackSwitch extends IComponent {
 
   isTurned: boolean;
   initialise(): Promise<void>;

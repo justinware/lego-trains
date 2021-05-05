@@ -1,38 +1,24 @@
-// import Action from '../core/action';
-// import { TrainDirection } from '../types/enums';
-// import ITrain from '../types/ITrain';
-// import IDetectionSensor from '../types/IDetectionSensor';
+import { ITrain, TrainDirection, TrainSpeed, IMotionSensor, SensorEvent } from '../types';
 
-// // TEMP
-// import wait from '../utils/wait';
+export default (train: ITrain,
+                direction: TrainDirection,
+                speed: TrainSpeed,
+                sensor: IMotionSensor,
+                event: SensorEvent) => new Promise<void>(resolve => {
 
-// class RunTrainUntilSensor extends Action {
+  if (event === SensorEvent.Enter) {
 
-//   private _direction: TrainDirection;
-//   private _train: ITrain;
-//   private _sensor: IDetectionSensor;
-  
-//   constructor(id: number,
-//               order: number,
-//               train: ITrain,
-//               sensor: IDetectionSensor,
-//               direction: TrainDirection = TrainDirection.Forward) {
+    sensor.enterStream.subscribe(() => {
 
-//     super(id, order);
+      resolve();
+    });
+  } else {
 
-//     this._direction = direction;
-//     this._train = train;
-//     this._sensor = sensor;
-//   }
+    sensor.exitStream.subscribe(() => {
 
-//   async execute(): Promise<void> {
-    
-//     this._train.move(this._direction);
-  
-//     await wait(5000);
+      resolve();
+    });
+  }
 
-//     this._train.stop();
-//   }  
-// }
-
-// export default RunTrainUntilSensor;
+  train.move(direction, speed);
+});

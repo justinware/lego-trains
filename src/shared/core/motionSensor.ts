@@ -1,17 +1,16 @@
 import { Observable, Observer } from 'rxjs';
-import { Sensor } from 'johnny-five';
+import { Sensor as JFSensor } from 'johnny-five';
 
-import { ComponentType } from '../types/enums';
+import { ComponentType, IMotionSensor } from '../types';
 import Component from './component';
-import IDetectionSensor from '../types/IDetectionSensor';
 
-class DetectionSensor extends Component implements IDetectionSensor {
+class MotionSensor extends Component implements IMotionSensor {
 
   private _$enter: Observable<void>;
   private _$exit: Observable<void>;
   private _enterObserver: Observer<void>;
   private _exitObserver: Observer<void>;
-  private _sensor: Sensor;
+  private _sensor: JFSensor;
   private _minThreshold: number = 12;
   private _isPassing = false;
 
@@ -24,7 +23,7 @@ class DetectionSensor extends Component implements IDetectionSensor {
 
     if (!this._isDummy) {
 
-      this._sensor = new Sensor({ pin, freq: 250, threshold: 100 } as any);
+      this._sensor = new JFSensor({ pin, freq: 250, threshold: 100 } as any);
       // this._sensorStream = fromEvent(this._sensor, 'data');
 
       this._sensor.on('change', this._handleSensorChange.bind(this));
@@ -83,4 +82,4 @@ class DetectionSensor extends Component implements IDetectionSensor {
   }
 }
 
-export default DetectionSensor;
+export default MotionSensor;
