@@ -23,5 +23,5 @@ export enum TrainDirection {
 export enum TrainSpeed {
 
   Low = 50,
-  Medium = 50
+  Medium = 100
 }

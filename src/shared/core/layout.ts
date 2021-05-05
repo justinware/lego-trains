@@ -12,11 +12,17 @@ abstract class Layout extends Component implements ILayout {
     super(id, ComponentType.Layout, isDummy);
   }
 
+  protected abstract initialise(): Promise<void>;
   protected abstract executeStart(): Promise<void>;
   protected abstract executeLoop(): Promise<void>;
   protected abstract executeEnd(): Promise<void>;
 
   async execute(maxLoops: number): Promise<void> {
+
+    // TODO: Should initialise() be called here (inside execute) or separately / externally ??
+    //       Not sure on this, as might not be a concern of the execute.
+    this.log(TEXT_STRINGS.INITIALISING);
+    await this.initialise();
 
     this.log(`${TEXT_STRINGS.EXECUTING} start`);
     await this.executeStart();

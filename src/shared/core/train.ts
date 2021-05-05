@@ -19,26 +19,30 @@ class Train extends Component implements ITrain {
   }
 
   move(direction: TrainDirection, speed: TrainSpeed = TrainSpeed.Medium): void {
-   
+
     const directionText:string = direction === TrainDirection.Forward ? 'forward' : 'backwards';
-    
-    console.log(`${this._messagePrefix}moving ${directionText}`);
+
+    // TODO: Store current direction & speed as private vars
+
+    // TODO: Only do anything if current direction or speed changes, otherwise is a a noop
+
+    this.log(`moving ${directionText} at ${speed} speed`);
 
     if (!this._isDummy) {
 
       if (direction === TrainDirection.Forward) {
-        
-        this._motor.start(100);
+
+        this._motor.start(speed);
       } else {
-        
-        this._motor.reverse(50);
+
+        this._motor.reverse(speed);
       }
     }
   }
-  
+
   stop(): void {
-  
-    console.log(`${this._messagePrefix}stopped`);
+
+    this.log(`stopped`);
 
     if (!this._isDummy) {
 

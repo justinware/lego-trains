@@ -12,7 +12,7 @@ const main = async () => {
 
   // const board = new Board(1, true);
   // await board.initialise();
-  const layout = new TestLayout(1);
+  const layout = new TestLayout(1, true);
   await layout.execute(5);
 
   console.log('App: complete');
