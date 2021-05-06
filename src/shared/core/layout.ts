@@ -1,4 +1,4 @@
-import { ILayout, ComponentType } from '../types';
+import { ILayout, ComponentType, IComponentProps } from '../types';
 import Component from './component';
 import { TEXT_STRINGS } from './constants';
 
@@ -6,9 +6,9 @@ abstract class Layout extends Component implements ILayout {
 
   private _loopCount: number = 0;
 
-  constructor(id: number, isDummy: boolean = false) {
+  constructor(props: IComponentProps) {
 
-    super(id, ComponentType.Layout, isDummy);
+    super(props, ComponentType.Layout);
   }
 
   protected abstract initialise(): Promise<void>;

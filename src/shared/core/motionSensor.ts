@@ -1,7 +1,7 @@
 import { Observable, Observer } from 'rxjs';
 import { Sensor as JFSensor } from 'johnny-five';
 
-import { ComponentType, IMotionSensor } from '../types';
+import { ComponentType, IMotionSensor, IComponentProps } from '../types';
 import Component from './component';
 
 class MotionSensor extends Component implements IMotionSensor {
@@ -14,9 +14,9 @@ class MotionSensor extends Component implements IMotionSensor {
   private _minThreshold: number = 12;
   private _isPassing = false;
 
-  constructor(id: number, pin: string, isDummy: boolean = false) {
+  constructor(props: IComponentProps, pin: string) {
 
-    super(id, ComponentType.Sensor, isDummy);
+    super(props, ComponentType.Sensor);
 
     this._$enter = new Observable((o: Observer<void>) => { this._enterObserver = o; });
     this._$exit = new Observable((o: Observer<void>) => { this._exitObserver = o; });
@@ -59,15 +59,13 @@ class MotionSensor extends Component implements IMotionSensor {
 
   private _pumpEnter(): void {
 
-    console.log(`${this._messagePrefix}enter`);
-
+    this.log('enter');
     this._enterObserver.next();
   }
 
   private _pumpExit(): void {
 
-    console.log(`${this._messagePrefix}exit`);
-
+    this.log('exit')
     this._exitObserver.next();
   }
 

@@ -1,15 +1,15 @@
 import { Motor } from 'johnny-five';
 
-import { ITrain, ComponentType, TrainDirection, TrainSpeed } from '../types';
+import { ITrain, ComponentType, IComponentProps, TrainDirection, TrainSpeed } from '../types';
 import Component from './component';
 
 class Train extends Component implements ITrain {
 
   private _motor: Motor = undefined;
 
-  constructor(id: number, pwmPin: number, dirPin: number, isDummy: boolean = false) {
+  constructor(props: IComponentProps, pwmPin: number, dirPin: number) {
 
-    super(id, ComponentType.Train, isDummy);
+    super(props, ComponentType.Train);
 
     if (!this._isDummy) {
 

@@ -1,4 +1,3 @@
-import { constant } from "lodash";
 export const TEXT_STRINGS = {
 
   COMPLETE: 'complete',
@@ -12,3 +11,5 @@ export const WAIT_TIMES = {
   MEDIUM: 5000,
   LARGE: 10000
 }
+
+export const MAX_PREFIX_LENGTH = 13;

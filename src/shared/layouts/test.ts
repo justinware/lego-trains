@@ -3,7 +3,7 @@ import Board from '../core/board';
 import Train from '../core/train';
 import MotionSensor from '../core/motionSensor';
 import TrackSwitch from '../core/trackSwitch';
-import { IBoard, ITrain, IMotionSensor, ITrackSwitch } from '../types';
+import { IBoard, ITrain, IMotionSensor, ITrackSwitch, IComponentProps } from '../types';
 import { TrainDirection, TrainSpeed, SensorEvent } from '../types/enums';
 import wait from '../utils/wait';
 import { WAIT_TIMES } from '../core/constants';
@@ -24,11 +24,13 @@ class TestLayout extends Layout {
 
   protected async initialise(): Promise<void> {
 
-    this._board = new Board(1, this._isDummy);
-    this._train = new Train(1, 5, 6, this._isDummy);
-    this._sensor1 = new MotionSensor(1, 'A1', this._isDummy);
-    this._sensor2 = new MotionSensor(2, 'A2', this._isDummy);
-    this._switch = new TrackSwitch(1, 'A0', this._isDummy);
+    const baseProps: IComponentProps = { id: 1, isDummy: this._isDummy };
+
+    this._board = new Board({ ...baseProps });
+    this._train = new Train({ ...baseProps, name: 'Xmas Train' }, 5, 6);
+    this._sensor1 = new MotionSensor({ ...baseProps, name: 'Siding Sensor' }, 'A1');
+    this._sensor2 = new MotionSensor({ ...baseProps, id: 2, name: 'Loop Sensor' }, 'A2');
+    this._switch = new TrackSwitch({ ...baseProps, name: 'Siding Switch' }, 'A0');
 
     await this._board.initialise();
     await this._switch.initialise();

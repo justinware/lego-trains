@@ -1,21 +1,12 @@
-// import motorTest from './motorTest';
-//import XmasLayout from '../shared/layouts/xmas';
-
-// const maxLoops: number = 3;
-// const isDummy: boolean = false;
-
-// import DummyLayout from '../shared/core/layout';
-import Board from '../shared/core/board';
 import TestLayout from '../shared/layouts/test';
+import { MAX_PREFIX_LENGTH } from '../shared/core/constants';
 
 const main = async () => {
 
-  // const board = new Board(1, true);
-  // await board.initialise();
-  const layout = new TestLayout(1, true);
+  const layout = new TestLayout({ id: 1, isDummy: true, name: 'Xmas Layout' });
   await layout.execute(5);
 
-  console.log('App: complete');
+  console.log(`${'App'.padEnd(MAX_PREFIX_LENGTH)} : complete`);
 }
 
 main();

@@ -1,6 +1,6 @@
 import { Servo } from 'johnny-five';
 
-import { ITrackSwitch, ComponentType } from '../types';
+import { ITrackSwitch, ComponentType, IComponentProps } from '../types';
 import Component from './component';
 import wait from '../utils/wait';
 
@@ -17,9 +17,9 @@ class TrackSwitch extends Component implements ITrackSwitch {
   private _turnAngle: number = maxAngle;
   private _servo: Servo = undefined;
 
-  constructor(id: number, pin: string, isDummy: boolean = false) {
+  constructor(props: IComponentProps, pin: string) {
 
-    super(id, ComponentType.TrackSwitch, isDummy);
+    super(props, ComponentType.TrackSwitch);
 
     if (!this._isDummy) {
 
@@ -30,7 +30,7 @@ class TrackSwitch extends Component implements ITrackSwitch {
         startAt: startAngle
       });
 
-      console.log(`${this._messagePrefix}servo initialised on pin ${this._servo.pin} at ${this._servo.position}°`);
+      this.log(`servo initialised on pin ${this._servo.pin} at ${this._servo.position}°`);
     }
   }
 
@@ -47,8 +47,7 @@ class TrackSwitch extends Component implements ITrackSwitch {
   async initialise(): Promise<void> {
 
     await this.straight(false);
-
-    console.log(`${this._messagePrefix}ready`);
+    this.log('ready');
   }
 
   async turn(): Promise<void> {
@@ -66,7 +65,7 @@ class TrackSwitch extends Component implements ITrackSwitch {
     await wait(adjustInterval);
 
     this._isTurned = true;
-    console.log(`${this._messagePrefix}${this.status}`);
+    this.log(this.status);
   }
 
   async straight(logMessage: boolean = true): Promise<void> {
@@ -86,7 +85,7 @@ class TrackSwitch extends Component implements ITrackSwitch {
     this._isTurned = false;
     if (logMessage) {
 
-      console.log(`${this._messagePrefix}${this.status}`);
+      this.log(this.status);
     }
   }
 }

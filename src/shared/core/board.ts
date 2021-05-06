@@ -1,15 +1,15 @@
 import { Board as JFBoard } from 'johnny-five';
 
-import { ComponentType, IBoard } from '../types';
+import { ComponentType, IBoard, IComponentProps } from '../types';
 import Component from './component';
 
 class Board extends Component implements IBoard {
 
   private _board: JFBoard = undefined;
 
-  constructor(id: number, isDummy: boolean = false) {
+  constructor(props: IComponentProps) {
 
-    super(id, ComponentType.Board, isDummy);
+    super(props, ComponentType.Board);
   }
 
   initialise(): Promise<void> {
@@ -18,7 +18,7 @@ class Board extends Component implements IBoard {
 
       const doResolve = ():void => {
 
-        console.log(`${this._messagePrefix}ready`);
+        this.log('ready');
         resolve();
       };
 

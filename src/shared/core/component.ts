@@ -1,4 +1,5 @@
-import { IComponent, ComponentType } from '../types';
+import { IComponent, ComponentType, IComponentProps } from '../types';
+import { MAX_PREFIX_LENGTH } from './constants';
 
 const messagePrefixMap = new Map<ComponentType, string>();
 messagePrefixMap.set(ComponentType.Board, 'Board');
@@ -14,12 +15,12 @@ abstract class Component implements IComponent {
   protected _isDummy: boolean;
   protected _messagePrefix: string;
 
-  constructor(id: number, type: ComponentType, isDummy: boolean = false) {
+  constructor({ id, isDummy, name }: IComponentProps, type: ComponentType) {
 
     this._id = id;
     this._type = type;
     this._isDummy = isDummy;
-    this._messagePrefix = `${messagePrefixMap.get(type)} ${id}: `;
+    this._messagePrefix = name || `${messagePrefixMap.get(type)} ${id}`;
   }
 
   get id(): number {
@@ -35,8 +36,7 @@ abstract class Component implements IComponent {
   protected log(message: string) {
 
     // TODO: Highlight (with colour) the prefix
-    // TODO: Pad the prefix out so that all components align
-    console.log(`${this._messagePrefix}${message}`);
+    console.log(`${this._messagePrefix.padEnd(MAX_PREFIX_LENGTH)} : ${message}`);
   }
 }
 
