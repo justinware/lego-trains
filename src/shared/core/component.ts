@@ -45,12 +45,12 @@ abstract class Component implements IComponent {
   protected log(message: string) {
 
     const { decorate } = messagePrefixMap.get(this._type);
-    const prefix = decorate(this._messagePrefix
-                                .toUpperCase()
-                                .replace(' ', '_')
-                                .padStart(MAX_PREFIX_LENGTH));
+    const prefix = this._messagePrefix
+                       .toUpperCase()
+                       .replace(' ', '_')
+                       .padStart(MAX_PREFIX_LENGTH);
 
-    console.log(`[${prefix}] ${(message)}`);
+    console.log(`[${decorate(prefix)}] ${(message)}`);
   }
 }
 

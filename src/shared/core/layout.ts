@@ -24,10 +24,10 @@ abstract class Layout extends Component implements ILayout {
     this.log(TEXT_STRINGS.INITIALISING);
     await this.initialise();
 
-    this.log(`${TEXT_STRINGS.EXECUTING} start`);
+    this.log(`${TEXT_STRINGS.EXECUTING} START`);
     await this.executeStart();
 
-    this.log(`${TEXT_STRINGS.EXECUTING} loops`);
+    this.log(`${TEXT_STRINGS.EXECUTING} LOOPS`);
     while (this._loopCount < maxLoops) {
 
       this._loopCount++;
@@ -35,7 +35,7 @@ abstract class Layout extends Component implements ILayout {
       await this.executeLoop();
     }
 
-    this.log(`${TEXT_STRINGS.EXECUTING} end`);
+    this.log(`${TEXT_STRINGS.EXECUTING} END`);
     await this.executeEnd();
 
     this.log(TEXT_STRINGS.COMPLETE);

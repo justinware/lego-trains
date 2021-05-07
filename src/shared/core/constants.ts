@@ -7,6 +7,7 @@ export const TEXT_STRINGS = {
 
 export const WAIT_TIMES = {
 
+  TRIVIAL: 1000,
   SMALL: 2000,
   MEDIUM: 5000,
   LARGE: 10000
