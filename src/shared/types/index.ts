@@ -1,3 +1,4 @@
+export * from './app';
 export * from './audio';
 export * from './board';
 export * from './component';

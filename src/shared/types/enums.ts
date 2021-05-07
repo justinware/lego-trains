@@ -1,5 +1,6 @@
 export enum ComponentType {
 
+  App,
   Board,
   Layout,
   Sensor,

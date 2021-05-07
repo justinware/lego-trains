@@ -1,12 +1,9 @@
-import TestLayout from '../shared/layouts/test';
-import { MAX_PREFIX_LENGTH } from '../shared/core/constants';
+import App from '../shared/core/app';
 
 const main = async () => {
 
-  const layout = new TestLayout({ id: 1, isDummy: true, name: 'Xmas Layout' });
-  await layout.execute(5);
-
-  console.log(`${'App'.padEnd(MAX_PREFIX_LENGTH)} : complete`);
+  const app = new App({ id: 1, isDummy: false, name: 'Main App' });
+  await app.run();
 }
 
 main();

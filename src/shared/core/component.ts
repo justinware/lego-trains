@@ -1,12 +1,21 @@
+import chalk, { ChalkFunction } from 'chalk';
+
 import { IComponent, ComponentType, IComponentProps } from '../types';
 import { MAX_PREFIX_LENGTH } from './constants';
 
-const messagePrefixMap = new Map<ComponentType, string>();
-messagePrefixMap.set(ComponentType.Board, 'Board');
-messagePrefixMap.set(ComponentType.Layout, 'Layout');
-messagePrefixMap.set(ComponentType.Sensor, 'Sensor');
-messagePrefixMap.set(ComponentType.TrackSwitch, 'Track Switch');
-messagePrefixMap.set(ComponentType.Train, 'Train');
+interface IPrefixDetails {
+
+  name: string;
+  decorate: ChalkFunction
+}
+
+const messagePrefixMap = new Map<ComponentType, IPrefixDetails>();
+messagePrefixMap.set(ComponentType.App, { name: 'App', decorate: chalk.whiteBright });
+messagePrefixMap.set(ComponentType.Board, { name: 'Board', decorate: chalk.green });
+messagePrefixMap.set(ComponentType.Layout, { name: 'Layout', decorate: chalk.magenta });
+messagePrefixMap.set(ComponentType.Sensor, { name: 'Sensor', decorate: chalk.yellow });
+messagePrefixMap.set(ComponentType.TrackSwitch, { name: 'Track Switch', decorate: chalk.blue });
+messagePrefixMap.set(ComponentType.Train, { name: 'Train', decorate: chalk.cyan });
 
 abstract class Component implements IComponent {
 
@@ -20,7 +29,7 @@ abstract class Component implements IComponent {
     this._id = id;
     this._type = type;
     this._isDummy = isDummy;
-    this._messagePrefix = name || `${messagePrefixMap.get(type)} ${id}`;
+    this._messagePrefix = name || `${messagePrefixMap.get(type).name} ${id}`;
   }
 
   get id(): number {
@@ -35,8 +44,13 @@ abstract class Component implements IComponent {
 
   protected log(message: string) {
 
-    // TODO: Highlight (with colour) the prefix
-    console.log(`${this._messagePrefix.padEnd(MAX_PREFIX_LENGTH)} : ${message}`);
+    const { decorate } = messagePrefixMap.get(this._type);
+    const prefix = decorate(this._messagePrefix
+                                .toUpperCase()
+                                .replace(' ', '_')
+                                .padStart(MAX_PREFIX_LENGTH));
+
+    console.log(`[${prefix}] ${(message)}`);
   }
 }
 
