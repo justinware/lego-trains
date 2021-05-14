@@ -2,7 +2,8 @@ export const TEXT_STRINGS = {
 
   COMPLETE: 'complete',
   EXECUTING: 'executing',
-  INITIALISING: 'initialising'
+  INITIALISING: 'initialising',
+  FINALISING: 'finalising'
 };
 
 export const WAIT_TIMES = {

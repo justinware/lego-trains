@@ -15,6 +15,7 @@ abstract class Layout extends Component implements ILayout {
   protected abstract executeStart(): Promise<void>;
   protected abstract executeLoop(): Promise<void>;
   protected abstract executeEnd(): Promise<void>;
+  protected abstract finalise(): Promise<void>;
 
   async execute(maxLoops: number): Promise<void> {
 
@@ -37,6 +38,9 @@ abstract class Layout extends Component implements ILayout {
 
     this.log(`${TEXT_STRINGS.EXECUTING} END`);
     await this.executeEnd();
+
+    this.log(TEXT_STRINGS.FINALISING);
+    await this.finalise();
 
     this.log(TEXT_STRINGS.COMPLETE);
   }
