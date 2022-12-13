@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
     "esModuleInterop": true,
-    "target": "es5",
+    "target": "ESNext",
     "lib": ["es5", "es6", "es7"],
-    "typeRoots" : ["./node_modules/@types"]
+    "typeRoots" : ["./node_modules/@types"],
+    "module": "CommonJS"
   }
 }

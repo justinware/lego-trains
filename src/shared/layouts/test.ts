@@ -38,11 +38,11 @@ class TestLayout extends Layout {
     this._board = new Board({ ...baseProps });
     await this._board.initialise();
 
-    this._train = new Train({ ...baseProps, name: 'Xmas Train', isDummy: true }, 5, 6);
-    this._sensor1 = new MotionSensor({ ...baseProps, name: 'Siding Sensor', isDummy: true }, 'A1');
-    this._sensor2 = new MotionSensor({ ...baseProps, id: 2, name: 'Loop Sensor', isDummy: true }, 'A2');
+    this._train = new Train({ ...baseProps, name: 'Xmas Train', isDummy:  this._isDummy }, 5, 6);
+    this._sensor1 = new MotionSensor({ ...baseProps, name: 'Siding Sensor', isDummy:  this._isDummy }, 'A1');
+    this._sensor2 = new MotionSensor({ ...baseProps, id: 2, name: 'Loop Sensor', isDummy:  this._isDummy }, 'A2');
 
-    this._switch = new TrackSwitch({ ...baseProps, name: 'Siding Switch', isDummy: true }, 'A0');
+    this._switch = new TrackSwitch({ ...baseProps, name: 'Siding Switch', isDummy:  this._isDummy }, 'A0');
     await this._switch.initialise();
 
     this._sensor1EnterSubscription = this._sensor1.enterStream.subscribe(() => {});
@@ -107,7 +107,7 @@ class TestLayout extends Layout {
     }
 
     // await runTrainUntilSensor(this._train, TrainDirection.Backward, TRAIN_PARK_SPEED, this._sensor1, SensorEvent.Exit);
-    await this._sensor1.exitStream.pipe(first()).toPromise();
+    await this._sensor1.exitStream.pipe(take(1)).toPromise();
     this._train.stop();
   }
 

@@ -13,8 +13,8 @@ class App extends Component implements IApp {
 
     this.log('starting');
 
-    const layout = new TestLayout({ id: 1, isDummy: true, name: 'Xmas Layout' });
-    await layout.execute(5);
+    const layout = new TestLayout({ id: 1, isDummy: this._isDummy, name: 'Xmas Layout' });
+    await layout.execute(3);
 
     this.log('complete');
   }
