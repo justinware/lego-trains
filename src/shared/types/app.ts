@@ -1,8 +1,6 @@
-import IComponent from './component';
+import type { Component } from './component';
 
-export interface IApp extends IComponent {
+export interface IApp extends Component {
 
   run(): Promise<void>
 }
-
-export default IApp;

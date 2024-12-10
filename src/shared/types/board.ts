@@ -1,8 +1,6 @@
-import IComponent from './component';
+import type { Component } from './component';
 
-export interface IBoard extends IComponent {
+export interface IBoard extends Component {
 
   initialise(): Promise<void>
 }
-
-export default IBoard;

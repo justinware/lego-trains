@@ -1,7 +1,7 @@
 import { Servo } from 'johnny-five';
 
-import { ITrackSwitch, ComponentType, IComponentProps } from '../types';
-import Component from './component';
+import { type ITrackSwitch, ComponentType, type ComponentProps } from '../types';
+import ComponentBase from './component';
 import wait from '../utils/wait';
 
 const minAngle: number = 25;
@@ -10,14 +10,14 @@ const adjustAngle: number = 3;
 const moveInterval: number = 400;
 const adjustInterval: number = 50;
 
-class TrackSwitch extends Component implements ITrackSwitch {
+class TrackSwitch extends ComponentBase implements ITrackSwitch {
 
   private _isTurned: boolean = false;
   private _straightAngle: number = minAngle;
   private _turnAngle: number = maxAngle;
-  private _servo: Servo = undefined;
+  private _servo?: Servo;
 
-  constructor(props: IComponentProps, pin: string) {
+  constructor(props: ComponentProps, pin: string) {
 
     super(props, ComponentType.TrackSwitch);
 
@@ -54,13 +54,13 @@ class TrackSwitch extends Component implements ITrackSwitch {
 
     if (!this._isDummy) {
 
-      this._servo.to(this._turnAngle, moveInterval);
+      this._servo?.to(this._turnAngle, moveInterval);
     }
     await wait(moveInterval);
 
     if (!this._isDummy) {
 
-      this._servo.to(this._turnAngle - adjustAngle, adjustInterval);
+      this._servo?.to(this._turnAngle - adjustAngle, adjustInterval);
     }
     await wait(adjustInterval);
 
@@ -72,13 +72,13 @@ class TrackSwitch extends Component implements ITrackSwitch {
 
     if (!this._isDummy) {
 
-      this._servo.to(this._straightAngle, moveInterval);
+      this._servo?.to(this._straightAngle, moveInterval);
     }
     await wait(moveInterval);
 
     if (!this._isDummy) {
 
-      this._servo.to(this._straightAngle + adjustAngle, adjustInterval);
+      this._servo?.to(this._straightAngle + adjustAngle, adjustInterval);
     }
     await wait(adjustInterval);
 

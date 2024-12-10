@@ -1,10 +1,8 @@
-import IComponent from './component';
+import type { Component } from './component';
 import { TrainDirection, TrainSpeed } from './enums';
 
-export interface ITrain extends IComponent {
+export interface ITrain extends Component {
 
   move(direction: TrainDirection, speed: TrainSpeed): void;
   stop(): void;
 }
-
-export default ITrain;

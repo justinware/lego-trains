@@ -1,20 +1,20 @@
-import { Observable, Observer } from 'rxjs';
+import { Observable, type Observer } from 'rxjs';
 import { Sensor as JFSensor } from 'johnny-five';
 
-import { ComponentType, IMotionSensor, IComponentProps } from '../types';
-import Component from './component';
+import { ComponentType, type IMotionSensor, type ComponentProps } from '../types';
+import ComponentBase from './component';
 
-class MotionSensor extends Component implements IMotionSensor {
+class MotionSensor extends ComponentBase implements IMotionSensor {
 
   private _$enter: Observable<void>;
   private _$exit: Observable<void>;
-  private _enterObserver: Observer<void>;
-  private _exitObserver: Observer<void>;
-  private _sensor: JFSensor;
+  private _enterObserver!: Observer<void>;
+  private _exitObserver!: Observer<void>;
+  private _sensor?: JFSensor;
   private _minThreshold: number = 12;
   private _isPassing = false;
 
-  constructor(props: IComponentProps, pin: string) {
+  constructor(props: ComponentProps, pin: string) {
 
     super(props, ComponentType.Sensor);
 
@@ -42,7 +42,7 @@ class MotionSensor extends Component implements IMotionSensor {
 
   private _handleSensorChange():void {
 
-    const value:number = this._sensor.analog;
+    const value:number = this._sensor?.analog || 0;
 
     if (!this._isPassing && value > this._minThreshold) {
 

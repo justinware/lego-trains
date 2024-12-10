@@ -6,11 +6,11 @@ import Board from '../core/board';
 import Train from '../core/train';
 import MotionSensor from '../core/motionSensor';
 import TrackSwitch from '../core/trackSwitch';
-import { IBoard, ITrain, IMotionSensor, ITrackSwitch, IComponentProps } from '../types';
+import type { IBoard, ITrain, IMotionSensor, ITrackSwitch, ComponentProps } from '../types';
 import { TrainDirection, TrainSpeed, SensorEvent } from '../types/enums';
 import wait from '../utils/wait';
 import { WAIT_TIMES } from '../core/constants';
-import runTrainUntilSensor from '../actions/runTrainUntilSensor';
+// import runTrainUntilSensor from '../actions/runTrainUntilSensor';
 
 const TRAIN_SENSOR_PASS_DURATION = WAIT_TIMES.SMALL;
 const TRAIN_PARK_SPEED = TrainSpeed.Low;
@@ -20,20 +20,20 @@ const TRAIN_RUN_DURATION = WAIT_TIMES.LARGE;
 
 class TestLayout extends Layout {
 
-  private _board: IBoard;
-  private _train: ITrain;
-  private _sensor1: IMotionSensor;
-  private _sensor2: IMotionSensor;
-  private _switch: ITrackSwitch;
+  private _board!: IBoard;
+  private _train!: ITrain;
+  private _sensor1!: IMotionSensor;
+  private _sensor2!: IMotionSensor;
+  private _switch!: ITrackSwitch;
 
-  private _sensor1EnterSubscription: Subscription;
-  private _sensor1ExitSubscription: Subscription;
-  private _sensor2EnterSubscription: Subscription;
-  private _sensor2ExitSubscription: Subscription;
+  private _sensor1EnterSubscription!: Subscription;
+  private _sensor1ExitSubscription!: Subscription;
+  private _sensor2EnterSubscription!: Subscription;
+  private _sensor2ExitSubscription!: Subscription;
 
   protected async initialise(): Promise<void> {
 
-    const baseProps: IComponentProps = { id: 1, isDummy: this._isDummy };
+    const baseProps: ComponentProps = { id: 1, isDummy: this._isDummy };
 
     this._board = new Board({ ...baseProps });
     await this._board.initialise();

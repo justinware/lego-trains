@@ -1,12 +1,12 @@
-import { ILayout, ComponentType, IComponentProps } from '../types';
-import Component from './component';
+import { type ILayout, ComponentType, type ComponentProps } from '../types';
+import ComponentBase from './component';
 import { TEXT_STRINGS } from './constants';
 
-abstract class Layout extends Component implements ILayout {
+abstract class Layout extends ComponentBase implements ILayout {
 
   private _loopCount: number = 0;
 
-  constructor(props: IComponentProps) {
+  constructor(props: ComponentProps) {
 
     super(props, ComponentType.Layout);
   }

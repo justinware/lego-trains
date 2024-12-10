@@ -1,13 +1,13 @@
 import { Motor } from 'johnny-five';
 
-import { ITrain, ComponentType, IComponentProps, TrainDirection, TrainSpeed } from '../types';
-import Component from './component';
+import { type ITrain, ComponentType, type ComponentProps, TrainDirection, TrainSpeed } from '../types';
+import ComponentBase from './component';
 
-class Train extends Component implements ITrain {
+class Train extends ComponentBase implements ITrain {
 
-  private _motor: Motor = undefined;
+  private _motor?: Motor;
 
-  constructor(props: IComponentProps, pwmPin: number, dirPin: number) {
+  constructor(props: ComponentProps, pwmPin: number, dirPin: number) {
 
     super(props, ComponentType.Train);
 
@@ -31,10 +31,10 @@ class Train extends Component implements ITrain {
 
       if (direction === TrainDirection.Forward) {
 
-        this._motor.start(speed);
+        this._motor?.start(speed);
       } else {
 
-        this._motor.reverse(speed);
+        this._motor?.reverse(speed);
       }
     }
   }
@@ -45,7 +45,7 @@ class Train extends Component implements ITrain {
 
     if (!this._isDummy) {
 
-      this._motor.stop();
+      this._motor?.stop();
     }
   }
 }

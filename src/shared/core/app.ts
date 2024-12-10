@@ -1,10 +1,10 @@
-import { IApp, ComponentType, IComponentProps } from '../types';
-import Component from './component';
+import { type IApp, ComponentType, type ComponentProps } from '../types';
+import ComponentBase from './component';
 import TestLayout from '../layouts/test';
 
-class App extends Component implements IApp {
+class App extends ComponentBase implements IApp {
 
-  constructor(props: IComponentProps) {
+  constructor(props: ComponentProps) {
 
     super(props, ComponentType.App);
   }

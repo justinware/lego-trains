@@ -1,9 +1,9 @@
 {
+  "extends": "@total-typescript/tsconfig/bundler/no-dom",
   "compilerOptions": {
-    "esModuleInterop": true,
-    "target": "ESNext",
-    "lib": ["es5", "es6", "es7"],
-    "typeRoots" : ["./node_modules/@types"],
-    "module": "CommonJS"
-  }
+    "types": ["node"],
+    "module": "ESNext",
+    "moduleResolution": "node",
+  },
+  "include": ["./src"]
 }

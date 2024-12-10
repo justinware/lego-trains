@@ -1,19 +1,14 @@
 import { ComponentType } from './enums';
 
-export interface IId {
-
+export interface Id {
   id: number;
 }
 
-export interface IComponent extends IId {
-
+export interface Component extends Id {
   type: ComponentType;
 }
 
-export interface IComponentProps extends IId {
-
+export interface ComponentProps extends Id {
   isDummy: boolean;
   name?: string;
 }
-
-export default IComponent;

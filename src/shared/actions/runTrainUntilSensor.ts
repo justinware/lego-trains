@@ -1,24 +1,24 @@
-import { ITrain, TrainDirection, TrainSpeed, IMotionSensor, SensorEvent } from '../types';
+// import { ITrain, TrainDirection, TrainSpeed, IMotionSensor, SensorEvent } from '../types';
 
-export default (train: ITrain,
-                direction: TrainDirection,
-                speed: TrainSpeed,
-                sensor: IMotionSensor,
-                event: SensorEvent) => new Promise<void>(resolve => {
+// export default (train: ITrain,
+//                 direction: TrainDirection,
+//                 speed: TrainSpeed,
+//                 sensor: IMotionSensor,
+//                 event: SensorEvent) => new Promise<void>(resolve => {
 
-  if (event === SensorEvent.Enter) {
+//   if (event === SensorEvent.Enter) {
 
-    sensor.enterStream.subscribe(() => {
+//     sensor.enterStream.subscribe(() => {
 
-      resolve();
-    });
-  } else {
+//       resolve();
+//     });
+//   } else {
 
-    sensor.exitStream.subscribe(() => {
+//     sensor.exitStream.subscribe(() => {
 
-      resolve();
-    });
-  }
+//       resolve();
+//     });
+//   }
 
-  train.move(direction, speed);
-});
+//   train.move(direction, speed);
+// });

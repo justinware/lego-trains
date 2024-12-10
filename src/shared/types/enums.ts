@@ -1,5 +1,4 @@
 export enum ComponentType {
-
   App,
   Board,
   Layout,
@@ -9,25 +8,21 @@ export enum ComponentType {
 }
 
 export enum TrackSwitchDirection {
-
   Left,
   Right
 }
 
 export enum TrainDirection {
-
   Forward,
   Backward
 }
 
 export enum TrainSpeed {
-
   Low = 50,
   Medium = 100
 }
 
 export enum SensorEvent {
-
   Enter,
   Exit
 }

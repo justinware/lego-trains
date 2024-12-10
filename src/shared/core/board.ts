@@ -1,13 +1,13 @@
 import { Board as JFBoard } from 'johnny-five';
 
-import { ComponentType, IBoard, IComponentProps } from '../types';
-import Component from './component';
+import { ComponentType, type IBoard, type ComponentProps } from '../types';
+import ComponentBase from './component';
 
-class Board extends Component implements IBoard {
+class Board extends ComponentBase implements IBoard {
 
-  private _board: JFBoard = undefined;
+  private _board?: JFBoard;
 
-  constructor(props: IComponentProps) {
+  constructor(props: ComponentProps) {
 
     super(props, ComponentType.Board);
   }

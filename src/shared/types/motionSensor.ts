@@ -1,13 +1,10 @@
 import { Observable } from 'rxjs';
+import type { Component } from './component';
 
-import IComponent from './component';
-
-export interface IMotionSensor extends IComponent {
+export interface IMotionSensor extends Component {
 
   enterStream: Observable<void>;
   exitStream: Observable<void>;
   forcePumpEnter(): void;
   forcePumpExit(): void;
 }
-
-export default IMotionSensor;
