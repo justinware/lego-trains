@@ -1,9 +1,7 @@
 import { empty } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
-export default (millisecs: number): Promise<unknown> => {
+export default (millisecs: number): Promise<unknown> => new Promise(resolve => {
 
-  return empty()
-          .pipe(delay(millisecs))
-          .toPromise();
-};
+  setTimeout(resolve, millisecs);
+});

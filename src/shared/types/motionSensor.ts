@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+
 import type { Component } from './component';
 
 export interface IMotionSensor extends Component {

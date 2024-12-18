@@ -2,6 +2,7 @@ import { Motor } from 'johnny-five';
 
 import { type ITrain, ComponentType, type ComponentProps, TrainDirection, TrainSpeed } from '../types';
 import ComponentBase from './component';
+import { M1_CONFIG } from '../constants/motor';
 
 class Train extends ComponentBase implements ITrain {
 
@@ -13,7 +14,7 @@ class Train extends ComponentBase implements ITrain {
 
     if (!this._isDummy) {
 
-      this._motor = new Motor([pwmPin, dirPin]);
+      this._motor = new Motor(M1_CONFIG);
     }
   }
 

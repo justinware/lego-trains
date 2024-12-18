@@ -1,4 +1,5 @@
 import type { Component } from './component';
+
 import { TrainDirection, TrainSpeed } from './enums';
 
 export interface ITrain extends Component {

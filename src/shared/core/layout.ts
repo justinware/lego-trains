@@ -4,7 +4,7 @@ import { TEXT_STRINGS } from './constants';
 
 abstract class Layout extends ComponentBase implements ILayout {
 
-  private _loopCount: number = 0;
+  private _loopCount = 0;
 
   constructor(props: ComponentProps) {
 

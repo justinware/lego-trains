@@ -4,15 +4,15 @@ import { type ITrackSwitch, ComponentType, type ComponentProps } from '../types'
 import ComponentBase from './component';
 import wait from '../utils/wait';
 
-const minAngle: number = 25;
-const maxAngle: number = 105;
-const adjustAngle: number = 3;
-const moveInterval: number = 400;
-const adjustInterval: number = 50;
+const minAngle = 25;
+const maxAngle = 105;
+const adjustAngle = 3;
+const moveInterval = 400;
+const adjustInterval = 50;
 
 class TrackSwitch extends ComponentBase implements ITrackSwitch {
 
-  private _isTurned: boolean = false;
+  private _isTurned = false;
   private _straightAngle: number = minAngle;
   private _turnAngle: number = maxAngle;
   private _servo?: Servo;
@@ -23,7 +23,7 @@ class TrackSwitch extends ComponentBase implements ITrackSwitch {
 
     if (!this._isDummy) {
 
-      let startAngle = minAngle;
+      const startAngle = minAngle;
       this._servo = new Servo({
         pin,
         range: [minAngle, maxAngle],
@@ -68,7 +68,7 @@ class TrackSwitch extends ComponentBase implements ITrackSwitch {
     this.log(this.status);
   }
 
-  async straight(logMessage: boolean = true): Promise<void> {
+  async straight(logMessage = true): Promise<void> {
 
     if (!this._isDummy) {
 
