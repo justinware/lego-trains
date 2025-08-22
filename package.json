@@ -5,7 +5,7 @@
   "scripts": {
     "compile": "tsc",
     "lint": "eslint src",
-    "start": "ts-node src/console/motorTest.ts"
+    "start": "npx tsx src/console/motorTest.ts"
   },
   "author": "Justin Ware",
   "license": "MIT",

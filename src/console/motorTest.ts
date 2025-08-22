@@ -15,6 +15,7 @@ import Board from '../shared/core/board';
 import wait from '../shared/utils/wait';
 import Train from '../shared/core/train';
 import { TrainDirection, TrainSpeed } from '../shared/types';
+import MotionSensor from '../shared/core/motionSensor';
 
 // export default async (isDummy: boolean) => {
 
@@ -34,24 +35,36 @@ import { TrainDirection, TrainSpeed } from '../shared/types';
 
 const main = async () => {
 
+  let passCount = 0;
+
   const board = new Board({ id: 1, isDummy: false });
   await board.initialise();
 
+  // const sensor = new MotionSensor({ id: 1, isDummy: false}, 'A0');
+
+  // sensor.enterStream.subscribe(() => { console.log('Passing'); passCount++ });
+
+  // while (passCount < 10) {
+
+  //   await wait(100);
+  // }
   const train = new Train({ id: 1, isDummy: false }, 0, 0);
 
-  train.move(TrainDirection.Forward, TrainSpeed.Fast);
+  train.stop();
 
-  await wait(5000);
+  train.move(TrainDirection.Forward, TrainSpeed.Medium);
+
+  await wait(60 * 1000 * 10);
 
   train.stop();
 
-  await wait(1000);
+  // await wait(5000);
 
-  train.move(TrainDirection.Backward, TrainSpeed.Low);
+  // train.move(TrainDirection.Backward, TrainSpeed.Low);
 
-  await wait(5000);
+  // await wait(10000);
 
-  train.stop();
+  // train.stop();
 }
 
 main();
