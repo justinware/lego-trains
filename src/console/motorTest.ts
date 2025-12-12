@@ -16,6 +16,7 @@ import wait from '../shared/utils/wait';
 import Train from '../shared/core/train';
 import { TrainDirection, TrainSpeed } from '../shared/types';
 import MotionSensor from '../shared/core/motionSensor';
+import play from '../shared/core/play';
 
 // export default async (isDummy: boolean) => {
 
@@ -34,7 +35,6 @@ import MotionSensor from '../shared/core/motionSensor';
 // }
 
 const main = async () => {
-
   let passCount = 0;
 
   const board = new Board({ id: 1, isDummy: false });
@@ -52,9 +52,14 @@ const main = async () => {
 
   train.stop();
 
-  train.move(TrainDirection.Forward, TrainSpeed.Medium);
+  // await play('./media/audio/xmas-ready-to-depart.mp3');
+  train.move(TrainDirection.Forward, TrainSpeed.Full);
 
-  await wait(60 * 1000 * 10);
+  await wait(30 * 1000 * 1);
+
+  // train.stop();
+  // train.move(TrainDirection.Backward, TrainSpeed.Low);
+  // await wait(30 * 1000 * 1);
 
   train.stop();
 
@@ -65,6 +70,6 @@ const main = async () => {
   // await wait(10000);
 
   // train.stop();
-}
+};
 
 main();

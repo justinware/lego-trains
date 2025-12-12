@@ -1,11 +1,12 @@
 import { Sensor as JFSensor } from 'johnny-five';
-import { Observable, type Observer } from 'rxjs';
+import { BehaviorSubject, filter, Observable, type Observer } from 'rxjs';
 
 import { ComponentType, type IMotionSensor, type ComponentProps } from '../types';
 import ComponentBase from './component';
 
 class MotionSensor extends ComponentBase implements IMotionSensor {
 
+  private _$enabled = new BehaviorSubject(false);
   private _$enter: Observable<void>;
   private _$exit: Observable<void>;
   private _enterObserver!: Observer<void>;
@@ -28,6 +29,11 @@ class MotionSensor extends ComponentBase implements IMotionSensor {
 
       this._sensor.on('change', this._handleSensorChange.bind(this));
     }
+
+    this._$enabled.pipe(filter(v => v === true ))
+      .subscribe(v => {
+
+      });
   }
 
   get enterStream(): Observable<void> {
@@ -38,6 +44,21 @@ class MotionSensor extends ComponentBase implements IMotionSensor {
   get exitStream(): Observable<void> {
 
     return this._$exit;
+  }
+
+  public enable() {
+    this._$enabled.next(true);
+  }
+
+  public disable() {
+    this._$enabled.next(false);
+  }
+
+  private _listen(): void {
+
+    while (this._$enabled.value) {
+
+    }
   }
 
   private _handleSensorChange():void {

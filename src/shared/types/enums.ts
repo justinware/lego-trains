@@ -4,27 +4,28 @@ export enum ComponentType {
   Layout,
   Sensor,
   TrackSwitch,
-  Train
+  Train,
 }
 
 export enum TrackSwitchDirection {
   Left,
-  Right
+  Right,
 }
 
 export enum TrainDirection {
   Forward,
-  Backward
+  Backward,
 }
 
 export enum TrainSpeed {
-  Low = 125,
+  //Low = 125,
+  Low = 80,
   Medium = 150,
-  Fast = 200,
-  Full = 255,
+  Fast = 175,
+  Full = 200,
 }
 
 export enum SensorEvent {
   Enter,
-  Exit
+  Exit,
 }
