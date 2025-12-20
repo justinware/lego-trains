@@ -19,10 +19,10 @@ export enum TrainDirection {
 
 export enum TrainSpeed {
   //Low = 125,
-  Low = 80,
+  Low = 100,
   Medium = 150,
   Fast = 175,
-  Full = 200,
+  Full = 240,
 }
 
 export enum SensorEvent {

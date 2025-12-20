@@ -14,9 +14,10 @@ import five from 'johnny-five';
 import Board from '../shared/core/board';
 import wait from '../shared/utils/wait';
 import Train from '../shared/core/train';
-import { TrainDirection, TrainSpeed } from '../shared/types';
+import { TrainDirection, TrainSpeed, type ITrain } from '../shared/types';
 import MotionSensor from '../shared/core/motionSensor';
 import play from '../shared/core/play';
+import { ENTER, SensorSource } from '../shared/core/sensorStream';
 
 // export default async (isDummy: boolean) => {
 
@@ -34,28 +35,49 @@ import play from '../shared/core/play';
 //   // train.stop();
 // }
 
+let train: ITrain;
+
+const cleanupAndExit = () => {
+  train.stop();
+  process.exit(0);
+};
+
 const main = async () => {
   let passCount = 0;
 
   const board = new Board({ id: 1, isDummy: false });
   await board.initialise();
+  // const sensor1 = new SensorSource('A0');
 
-  // const sensor = new MotionSensor({ id: 1, isDummy: false}, 'A0');
-
-  // sensor.enterStream.subscribe(() => { console.log('Passing'); passCount++ });
+  // const sensor = new MotionSensor({ id: 1, isDummy: false }, 'A0');
+  // sensor.enterStream.subscribe(() => {
+  //   console.log('Passing');
+  //   passCount++;
+  // });
 
   // while (passCount < 10) {
 
   //   await wait(100);
   // }
-  const train = new Train({ id: 1, isDummy: false }, 0, 0);
+  train = new Train({ id: 1, isDummy: false }, 0, 0);
+  // const sensor1 = new SensorSource('A0');
+  // sensor1.listen().subscribe((state) => {
+  //   if (state === ENTER) {
+  //     passCount++;
+  //     console.log('Pass count:', passCount);
+  //     setTimeout(() => {
+  //       sensor1.reset();
+  //     }, 2000);
+  //   }
+  // });
 
-  train.stop();
+  // sensor1.listen().subscribe(() => {});
 
   // await play('./media/audio/xmas-ready-to-depart.mp3');
   train.move(TrainDirection.Forward, TrainSpeed.Full);
+  const sensor1 = new SensorSource('A0');
 
-  await wait(30 * 1000 * 1);
+  await wait(30 * 1000 * 2);
 
   // train.stop();
   // train.move(TrainDirection.Backward, TrainSpeed.Low);
@@ -71,5 +93,10 @@ const main = async () => {
 
   // train.stop();
 };
+
+process.on('SIGINT', () => {
+  console.log('\nReceived SIGINT signal.');
+  cleanupAndExit();
+});
 
 main();
